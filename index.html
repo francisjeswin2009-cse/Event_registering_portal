@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Events | Registration Portal</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- LEFT SIDEBAR: profile, navigation, customization, help -->
+  <aside class="sidebar">
+    <div class="brand">Campus<em>.</em>Events</div>
+
+    <div class="profile" id="profile"></div>
+
+    <nav class="menu">
+      <button class="tab active" data-view="explore">Explore</button>
+      <button class="tab" data-view="passes">My Passes</button>
+      <button class="tab" data-view="organizer">Organizer</button>
+      <button class="tab" data-view="customize">Customize</button>
+    </nav>
+
+    <section class="custom-panel" id="customPanel">
+      <div>
+        <h4>Theme presets</h4>
+        <div class="presets" id="presets"></div>
+      </div>
+
+      <div>
+        <h4>Colors</h4>
+        <div class="row"><span>Accent</span>
+          <div class="swatches" id="swatches"></div>
+          <input type="color" id="accentPick" title="Custom accent color">
+        </div>
+        <div class="row"><span>Background</span>
+          <input type="color" id="paperPick" title="Custom background color">
+          <button class="link" data-act="resetPaper">Default</button>
+        </div>
+      </div>
+
+      <div>
+        <h4>Typography</h4>
+        <select class="plain full" id="fontSel">
+          <option value="serif">Editorial serif</option>
+          <option value="sans">Modern sans</option>
+          <option value="mono">Tech mono</option>
+        </select>
+      </div>
+
+      <div>
+        <h4>Shape and density</h4>
+        <div class="row"><span>Corner radius</span><span id="radiusVal"></span></div>
+        <input type="range" id="radius" min="0" max="20">
+        <div class="row" style="margin-top:12px"><span>Card density</span>
+          <select class="plain" id="density">
+            <option value="comfortable">Comfortable</option>
+            <option value="compact">Compact</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row"><span>Dark mode</span><input type="checkbox" id="darkToggle"></div>
+      <button class="btn ghost block" data-act="resetAll">Reset to defaults</button>
+    </section>
+
+    <button class="help-btn" data-act="help">Need help?</button>
+  </aside>
+
+  <main>
+    <!-- EXPLORE -->
+    <section class="view show" id="explore">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Fests · Workshops · Seminars · Competitions</div>
+          <h1 class="hero-title">Find your next <em>campus</em> moment.</h1>
+          <p class="muted hero-copy">Reserve a seat in seconds, see live availability, and carry a confirmation ticket to the door.</p>
+          <div class="stats">
+            <div><b id="hEvents">0</b><span>Upcoming events</span></div>
+            <div><b id="hSeats">0</b><span>Seats open</span></div>
+            <div><b id="hRegs">0</b><span>Students registered</span></div>
+          </div>
+        </div>
+        <div class="hero-art" id="heroArt"></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="chips" id="chips"></div>
+        <input class="search" id="search" placeholder="Search events or venues">
+      </div>
+      <div class="grid" id="eventGrid"></div>
+    </section>
+
+    <!-- MY PASSES -->
+    <section class="view" id="passes">
+      <div class="eyebrow">Your registrations</div>
+      <h2 class="page-title">My passes</h2>
+      <div class="panel flush" id="passWrap"></div>
+    </section>
+
+    <!-- ORGANIZER -->
+    <section class="view" id="organizer">
+      <div class="eyebrow">Organizer console</div>
+      <h2 class="page-title">Dashboard</h2>
+      <div class="panel" id="orgLocked"></div>
+
+      <div id="orgContent">
+        <div class="kpis">
+          <div><b id="sEvents">0</b><span>Events</span></div>
+          <div><b id="sRegs">0</b><span>Registrations</span></div>
+          <div><b id="sFill">0%</b><span>Seats filled</span></div>
+          <div><b id="sFull">0</b><span>Sold out</span></div>
+        </div>
+
+        <div class="split">
+          <form class="panel" id="createForm">
+            <h2 class="form-title">Publish an event</h2>
+            <p class="muted form-note">Complete each section. Title, date and venue are required.</p>
+
+            <div class="section-label">1 · Basics</div>
+            <div class="field"><label>Title</label><input name="title" required></div>
+            <div class="row2">
+              <div class="field"><label>Category</label><select name="category"><option>Fest</option><option>Workshop</option><option>Seminar</option><option>Competition</option></select></div>
+              <div class="field"><label>Seat limit</label><input name="capacity" type="number" min="1" value="50" required></div>
+            </div>
+
+            <div class="section-label">2 · Schedule and venue</div>
+            <div class="row2">
+              <div class="field"><label>Date</label><input name="date" type="date" required></div>
+              <div class="field"><label>Time</label><input name="time" type="time" value="10:00" required></div>
+            </div>
+            <div class="field"><label>Venue</label><input name="venue" required></div>
+
+            <div class="section-label">3 · Details</div>
+            <div class="field"><label>Eligibility</label><input name="eligibility" value="Open to all students"></div>
+            <div class="field"><label>Description</label><textarea name="description"></textarea></div>
+
+            <div class="section-label">4 · Event picture</div>
+            <div class="pic-pick">
+              <div class="pic-preview" id="picPreview"><span>No picture yet</span></div>
+              <div class="pic-controls">
+                <input type="file" id="picInput" accept="image/*">
+                <small class="muted">JPG or PNG. Resized automatically for the event card.</small>
+              </div>
+            </div>
+
+            <button class="btn block form-submit">Publish event</button>
+          </form>
+
+          <div class="panel flush">
+            <table>
+              <thead><tr><th>Event</th><th>Seats</th><th></th></tr></thead>
+              <tbody id="orgRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMIZE PREVIEW (controls live in the left sidebar) -->
+    <section class="view" id="customize">
+      <div class="eyebrow">Live preview</div>
+      <h2 class="page-title">Your theme</h2>
+      <p class="muted intro">Change colors, fonts and shapes in the left panel. Changes apply instantly and are saved on this device.</p>
+      <div class="panel live" id="live"></div>
+    </section>
+  </main>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="java.js"></script>
+</body>
+</html>
